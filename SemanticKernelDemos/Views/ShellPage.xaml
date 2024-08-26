@@ -59,13 +59,23 @@
                         <FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xE768;"/>
                     </NavigationViewItem.Icon>
                 </NavigationViewItem>
-                
-                <NavigationViewItem x:Uid="Shell_Docs" helpers:NavigationHelper.NavigateTo="SemanticKernelDemos.ViewModels.DocsViewModel">
+                <NavigationViewItem x:Uid="Shell_Demo3" helpers:NavigationHelper.NavigateTo="SemanticKernelDemos.ViewModels.Demo3ViewModel" ToolTipService.ToolTip="InvokePromptAsync with template">
+                    <NavigationViewItem.Icon>
+                        <FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xE768;"/>
+                    </NavigationViewItem.Icon>
+                </NavigationViewItem>
+                <NavigationViewItem x:Uid="Shell_Demo4" helpers:NavigationHelper.NavigateTo="SemanticKernelDemos.ViewModels.Demo4ViewModel" ToolTipService.ToolTip="InvokeAsync from semantic plugin">
+                    <NavigationViewItem.Icon>
+                        <FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xE768;"/>
+                    </NavigationViewItem.Icon>
+                </NavigationViewItem>
+
+                <NavigationViewItem x:Uid="Shell_Docs" helpers:NavigationHelper.NavigateTo="SemanticKernelDemos.ViewModels.DocsViewModel" ToolTipService.ToolTip="Open the Semantic Kernel documentation">
                     <NavigationViewItem.Icon>
                         <FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xe774;"/>
                     </NavigationViewItem.Icon>
                 </NavigationViewItem>
-                <NavigationViewItem x:Uid="Shell_Repo" helpers:NavigationHelper.NavigateTo="SemanticKernelDemos.ViewModels.RepoViewModel">
+                <NavigationViewItem x:Uid="Shell_Repo" helpers:NavigationHelper.NavigateTo="SemanticKernelDemos.ViewModels.RepoViewModel" ToolTipService.ToolTip="Open the Semantic Kernel GitHub repository">
                     <NavigationViewItem.Icon>
                         <FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xe774;"/>
                     </NavigationViewItem.Icon>

@@ -20,6 +20,8 @@ public class PageService : IPageService
         Configure<RepoViewModel, RepoPage>();
         Configure<SettingsViewModel, SettingsPage>();
         Configure<Demo2ViewModel, Demo2Page>();
+        Configure<Demo3ViewModel, Demo3Page>();
+        Configure<Demo4ViewModel, Demo4Page>();
     }
 
     public Type GetPageType(string key)

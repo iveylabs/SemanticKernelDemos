@@ -20,6 +20,7 @@ public class ChatManager
     private ChatHistory _history;
     private string? _pluginInfo;
     private string? _botResponse;
+    private readonly KernelPlugin? _plugin;
 
     public ChatHistory History
     {
@@ -72,9 +73,10 @@ public class ChatManager
         _chatCompletionService = _kernel.GetRequiredService<IChatCompletionService>();
     }
 
-    // Constructor (method)
-    public ChatManager(Kernel kernel, string method)
+    // Constructor (plugin)
+    public ChatManager(Kernel kernel, KernelPlugin plugin)
     {
+        _plugin = plugin;
         // For reporting the plugin and function in use
         WeakReferenceMessenger.Default.Register<PluginInUseMessage>(this, (r, m) =>
         {
@@ -141,7 +143,7 @@ public class ChatManager
                 }
                 else
                 {
-                    _botResponse = "Sorry, something isn't working! 😟 Are you trying to invoke a function without allowing auto-invocation?";
+                    _botResponse = "Sorry, something isn't working! 😟 The LLM didn't respond";
                 }
                 break;
             case ("InvokeAsync"):
@@ -152,36 +154,58 @@ public class ChatManager
                 }
                 else
                 {
-                    _botResponse = "Sorry, something isn't working! 😟 Are you trying to invoke a function without allowing auto-invocation?";
+                    _botResponse = "Sorry, something isn't working! 😟 The LLM didn't respond";
+                }
+                break;
+            case("InvokePromptAsyncWithTemplate"):
+                var language = "French";
+                var userBackground = message;
+
+                var prompt = @"You are a travel assistant. You are helpful, creative, and very friendly.
+                                Consider the traveller's background:
+                                {{ConversationSummaryPlugin.SummarizeConversation $history}}
+        
+                                Create a list of helpful words and phrases in {language} the traveller would find useful.
+        
+                                Group phrases by category. Include common direction words. Display the 
+                                phrases in the following format:
+                                Hello - Ciao [chow]
+
+                                Begin with: 'Here are some phrases in {{$language}} you may find helpful:' 
+                                and end with: 'I hope this helps you on your trip!'";
+                var templateResponse = await _kernel.InvokePromptAsync(prompt,
+                    new()
+                    {
+                        { "language", language },
+                        { "history", userBackground }
+                    });
+                if (templateResponse != null)
+                {
+                    _botResponse = templateResponse.ToString();
+                }
+                else
+                {
+                    _botResponse = "Sorry, something isn't working! 😟 The LLM didn't respond";
+                }
+                break;
+            case ("InvokeAsyncDest"):
+                var destResponse = await _kernel.InvokeAsync<string>(_plugin["SuggestDestinations"],
+                    new()
+                    {
+                        { "input", message }
+                    });
+                if (destResponse != null)
+                {
+                    _botResponse = destResponse.ToString();
+                }
+                else
+                {
+                    _botResponse = "Sorry, something isn't working! 😟 The LLM didn't respond";
                 }
                 break;
             default:
                 break;
         }
-
-        //// Get the response from the chat completion service
-        //var response = await _chatCompletionService.GetChatMessageContentAsync(
-        //    _history,
-        //    _promptExecutionSettings,
-        //    _kernel);
-
-        //if (response.Content != null)
-        //{
-        //    // Store the current plugin info
-        //    var currentPluginInfo = _pluginInfo;
-
-        //    // Reset the plugin info for the next message
-        //    _pluginInfo = string.Empty;
-
-        //    // Prepend plugin and function info (if applicable) to the AI response
-        //    _botResponse = !string.IsNullOrEmpty(currentPluginInfo)
-        //        ? $"{currentPluginInfo}\n{response.Content}"
-        //        : response.Content;
-        //}
-        //else
-        //{
-        //    _botResponse = "Sorry, something isn't working! 😟 Are you trying to invoke a function without allowing auto-invocation?";
-        //}
         return _botResponse;
     }
 }

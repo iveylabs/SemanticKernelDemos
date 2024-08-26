@@ -1,4 +1,5 @@
-﻿using System.Net;
+﻿using System.Diagnostics;
+using System.Net;
 using Microsoft.SemanticKernel;
 using Microsoft.SemanticKernel.ChatCompletion;
 using Microsoft.SemanticKernel.Plugins.Core;
@@ -14,8 +15,12 @@ using SemanticKernelDemos.ViewModels;
 
 namespace SemanticKernelDemos.Views;
 
-public sealed partial class Demo1Page : Page
+public sealed partial class Demo4Page : Page
 {
+    public Demo4ViewModel ViewModel
+    {
+        get;
+    }
     public Kernel Kernel
     {
         get; private set;
@@ -29,14 +34,9 @@ public sealed partial class Demo1Page : Page
     private string _chatModel = string.Empty;
     private bool _autoInvoke;
 
-    public Demo1ViewModel ViewModel
+    public Demo4Page()
     {
-        get;
-    }
-
-    public Demo1Page()
-    {
-        ViewModel = App.GetService<Demo1ViewModel>();
+        ViewModel = App.GetService<Demo4ViewModel>();
         InitializeComponent();
 
         // Show a loading circle
@@ -44,7 +44,6 @@ public sealed partial class Demo1Page : Page
 
         _localSettingsService = App.GetService<ILocalSettingsService>();
         LoadSettings();
-
 
         // Create a kernel with Azure OpenAI chat completion
         var kernelBuilder = Kernel.CreateBuilder()
@@ -64,13 +63,16 @@ public sealed partial class Demo1Page : Page
         {
             throw new InvalidOperationException("Kernel creation failed.", ex);
         }
+        Debug.WriteLine($"Current directory: {Environment.CurrentDirectory}");
+
+        // Import TravelPlugin from prompt directory
+        var travelPlugin = Kernel.ImportPluginFromPromptDirectory("Prompts/TravelPlugin");
 
         // Initialise ChatManager
-        _chatManager = new ChatManager(Kernel);
+        _chatManager = new ChatManager(Kernel, travelPlugin);
 
         // Hide the loading circle
         HideLoading();
-
     }
 
     private void LoadSettings()
@@ -205,7 +207,7 @@ public sealed partial class Demo1Page : Page
                 AddMessageToConversation(AuthorRole.User, userInput);
 
                 // Send user message to the chat manager
-                var response = await _chatManager.SendMessageAsync(userInput, "InvokePromptAsync");
+                var response = await _chatManager.SendMessageAsync(userInput, "InvokeAsyncDest");
 
                 // Display the completion response
                 AddMessageToConversation(AuthorRole.Assistant, response);

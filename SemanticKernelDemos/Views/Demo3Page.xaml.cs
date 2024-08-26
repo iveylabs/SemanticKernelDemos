@@ -1,21 +1,24 @@
-﻿using System.Net;
+﻿using Microsoft.SemanticKernel.ChatCompletion;
 using Microsoft.SemanticKernel;
-using Microsoft.SemanticKernel.ChatCompletion;
-using Microsoft.SemanticKernel.Plugins.Core;
-using Microsoft.UI;
 using Microsoft.UI.Xaml;
+using Microsoft.UI;
 using Microsoft.UI.Xaml.Controls;
-using Microsoft.UI.Xaml.Input;
-using Microsoft.UI.Xaml.Media;
+using SemanticKernelDemos.ViewModels;
 using SemanticKernelDemos.Contracts.Services;
 using SemanticKernelDemos.Helpers;
-using SemanticKernelDemos.Plugins;
-using SemanticKernelDemos.ViewModels;
+using Microsoft.UI.Xaml.Media;
+using Microsoft.UI.Xaml.Input;
+using Microsoft.SemanticKernel.Plugins.Core;
 
 namespace SemanticKernelDemos.Views;
 
-public sealed partial class Demo1Page : Page
+public sealed partial class Demo3Page : Page
 {
+    public Demo3ViewModel ViewModel
+    {
+        get;
+    }
+
     public Kernel Kernel
     {
         get; private set;
@@ -29,14 +32,9 @@ public sealed partial class Demo1Page : Page
     private string _chatModel = string.Empty;
     private bool _autoInvoke;
 
-    public Demo1ViewModel ViewModel
+    public Demo3Page()
     {
-        get;
-    }
-
-    public Demo1Page()
-    {
-        ViewModel = App.GetService<Demo1ViewModel>();
+        ViewModel = App.GetService<Demo3ViewModel>();
         InitializeComponent();
 
         // Show a loading circle
@@ -64,6 +62,9 @@ public sealed partial class Demo1Page : Page
         {
             throw new InvalidOperationException("Kernel creation failed.", ex);
         }
+
+        // Import native core plugin
+        Kernel.Plugins.AddFromType<ConversationSummaryPlugin>();
 
         // Initialise ChatManager
         _chatManager = new ChatManager(Kernel);
@@ -205,7 +206,7 @@ public sealed partial class Demo1Page : Page
                 AddMessageToConversation(AuthorRole.User, userInput);
 
                 // Send user message to the chat manager
-                var response = await _chatManager.SendMessageAsync(userInput, "InvokePromptAsync");
+                var response = await _chatManager.SendMessageAsync(userInput, "InvokePromptAsyncWithTemplate");
 
                 // Display the completion response
                 AddMessageToConversation(AuthorRole.Assistant, response);
@@ -247,4 +248,5 @@ public sealed partial class Demo1Page : Page
     {
         SendMessage();
     }
+
 }

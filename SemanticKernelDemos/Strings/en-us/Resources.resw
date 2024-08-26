@@ -197,4 +197,10 @@ This application was created by Paul Ivey for his own learning and for demonstra
   <data name="Shell_Demo2.Content" xml:space="preserve">
     <value>InvokeAsync (TimePlugin, DayOfWeek)</value>
   </data>
+  <data name="Shell_Demo3.Content" xml:space="preserve">
+    <value>InvokePromptAsync with template</value>
+  </data>
+  <data name="Shell_Demo4.Content" xml:space="preserve">
+    <value>InvokeAsync with semantic plugin</value>
+  </data>
 </root>
