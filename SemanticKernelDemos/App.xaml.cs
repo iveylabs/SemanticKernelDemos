@@ -74,6 +74,8 @@ public partial class App : Application
             services.AddSingleton<IFileService, FileService>();
 
             // Views and ViewModels
+            services.AddTransient<Demo5ViewModel>();
+            services.AddTransient<Demo5Page>();
             services.AddTransient<Demo4ViewModel>();
             services.AddTransient<Demo4Page>();
             services.AddTransient<Demo3ViewModel>();
@@ -95,6 +97,7 @@ public partial class App : Application
 
             // Custom plugins
             services.AddTransient<ManageChatPlugin>();
+            services.AddTransient<WeatherPlugin>();
 
             // Register ChatControl
             services.AddTransient<ChatControl>();

@@ -28,6 +28,7 @@ public sealed partial class SettingsPage : Page
         var chatDeployment = await _localSettingsService.ReadSettingAsync<string>("AOAIChatDeployment");
         var chatModel = await _localSettingsService.ReadSettingAsync<string>("AOAIChatModel");
         var autoInvoke = await _localSettingsService.ReadSettingAsync<bool>("AutoInvoke");
+        var weatherAPIKey = await _localSettingsService.ReadSettingAsync<string>("WeatherAPIKey");
 
         if (endpoint != null)
         {
@@ -46,6 +47,10 @@ public sealed partial class SettingsPage : Page
             ChatModel.Text = chatModel;
         }
         AutoInvokeCheckBox.IsChecked = autoInvoke;
+        if (weatherAPIKey != null)
+        {
+            WeatherAPIKey.Password = weatherAPIKey;
+        }
 
     }
 
@@ -56,6 +61,7 @@ public sealed partial class SettingsPage : Page
         var chatDeployment = ChatDeployment.Text;
         var chatModel = ChatModel.Text;
         var autoInvoke = AutoInvokeCheckBox.IsChecked;
+        var weatherAPIKey = WeatherAPIKey.Password;
 
         if (!string.IsNullOrWhiteSpace(endpoint))
         {
@@ -74,5 +80,9 @@ public sealed partial class SettingsPage : Page
             await _localSettingsService.SaveSettingAsync("AOAIChatModel", chatModel);
         }
             await _localSettingsService.SaveSettingAsync("AutoInvoke", autoInvoke);
+        if (!string.IsNullOrWhiteSpace(weatherAPIKey))
+        {
+            await _localSettingsService.SaveSettingAsync("WeatherAPIKey", weatherAPIKey);
+        }
     }
 }

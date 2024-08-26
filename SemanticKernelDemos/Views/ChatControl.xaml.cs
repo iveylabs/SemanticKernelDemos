@@ -81,7 +81,7 @@ public sealed partial class ChatControl : UserControl
         LoadSettings();
 
         // Initialise ChatManager
-        _chatManager = new ChatManager(Kernel);
+        //_chatManager = new ChatManager(Kernel);
 
         // Hide the loading circle
         HideLoading();

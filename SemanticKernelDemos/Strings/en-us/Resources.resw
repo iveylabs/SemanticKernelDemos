@@ -203,4 +203,7 @@ This application was created by Paul Ivey for his own learning and for demonstra
   <data name="Shell_Demo4.Content" xml:space="preserve">
     <value>InvokeAsync with semantic plugin</value>
   </data>
+  <data name="Shell_Demo5.Content" xml:space="preserve">
+    <value>Auto-invocation + Weather</value>
+  </data>
 </root>

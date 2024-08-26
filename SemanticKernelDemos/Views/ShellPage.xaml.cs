@@ -37,6 +37,7 @@ public sealed partial class ShellPage : Page
         AppTitleBarText.Text = "AppDisplayName".GetLocalized();
 
         var manageChatPlugin = App.GetService<ManageChatPlugin>();
+        var manageWeatherPlugin = App.GetService<WeatherPlugin>();
     }
 
     private void OnLoaded(object sender, Microsoft.UI.Xaml.RoutedEventArgs e)

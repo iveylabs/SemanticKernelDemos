@@ -76,19 +76,6 @@ public sealed partial class Demo2Page : Page
         HideLoading();
 
         SendMessage();
-
-        //var chatControl = (ChatControl)FindName("ChatControl");
-        //if (chatControl != null)
-        //{
-        //    var plugins = new List<Type>
-        //        {
-        //            typeof(TimePlugin),
-        //            typeof(ManageChatPlugin)
-        //        };
-        //    chatControl.CreateKernelBuilder(plugins);
-        //}
-
-
     }
     private void LoadSettings()
     {

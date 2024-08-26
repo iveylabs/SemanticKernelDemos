@@ -22,6 +22,7 @@ public class PageService : IPageService
         Configure<Demo2ViewModel, Demo2Page>();
         Configure<Demo3ViewModel, Demo3Page>();
         Configure<Demo4ViewModel, Demo4Page>();
+        Configure<Demo5ViewModel, Demo5Page>();
     }
 
     public Type GetPageType(string key)
