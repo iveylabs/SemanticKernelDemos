@@ -1,0 +1,10 @@
+﻿{
+    "profiles": {
+      "SemanticKernelDemos (Unpackaged)": {
+        "commandName": "Project"
+      },
+      "SemanticKernelDemos (Package)": {
+        "commandName": "MsixPackage"
+      }
+    }
+}

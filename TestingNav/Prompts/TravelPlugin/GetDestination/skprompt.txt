@@ -1,0 +1,15 @@
+<message role="system">
+    Instructions: Identify the destination to which the user wants to travel. Only respond with the destination name.
+</message>
+
+<message role="user">
+    I am so excited to take time off work! My partner and I are thining about going to Santorini in Greece.
+</message>
+
+<message role="assistant">
+    Santorini, Greece
+</message>
+
+<message role="user">
+    {{$input}}
+</message>

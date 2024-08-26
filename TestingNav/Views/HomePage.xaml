@@ -1,0 +1,84 @@
+﻿<Page
+    x:Class="SemanticKernelDemos.Views.HomePage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <Grid x:Name="ContentArea">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <TextBlock
+            Grid.Row="0"
+            Text="{x:Bind ViewModel.HomeHeading, Mode=OneWay}"
+            Style="{StaticResource TitleTextBlockStyle}"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Top"/>
+        <TextBlock
+            Grid.Row="1"
+            Style="{StaticResource BodyTextBlockStyle}"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            Margin="0,56,0,0">
+            <Run Text="Before you try running any of these demos, make sure you visit the"/>
+            <Hyperlink Click="SettingsLink_Click">Settings</Hyperlink>
+            <Run Text="page to configure your Azure OpenAI settings."/>
+        </TextBlock>
+        <Border Grid.Row="2" Height="1" Background="{ThemeResource SystemControlForegroundBaseLowBrush}" Margin="0,50,0,20"/>
+        <Border
+            Grid.Row="3"
+            Background="DarkSlateGray"
+            BorderBrush="LightSlateGray"
+            BorderThickness="2"
+            CornerRadius="10"
+            Padding="10"
+            Margin="20"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <TextBlock
+                    Style="{StaticResource SubtitleTextBlockStyle}"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Top"
+                    Text="Current Azure OpenAI Settings:"
+                    Margin="0,0,0,10"
+                    Grid.ColumnSpan="2"
+                    Grid.Row="0"/>
+
+                <TextBlock x:Name="EndpointLabel" Style="{StaticResource BodyTextBlockStyle}" Text="Endpoint:" HorizontalAlignment="Right" Margin="0,0,10,0" Grid.Row="1" Grid.Column="0"/>
+                <TextBlock x:Name="EndpointValue" Style="{StaticResource BodyTextBlockStyle}" Grid.Row="1" Grid.Column="1"/>
+
+                <TextBlock x:Name="ChatDeploymentLabel" Text="ChatCompletions Deployment:" Style="{StaticResource BodyTextBlockStyle}" HorizontalAlignment="Right" Margin="0,0,10,0" Grid.Row="3" Grid.Column="0"/>
+                <TextBlock x:Name="ChatDeploymentValue" Style="{StaticResource BodyTextBlockStyle}" Grid.Row="3" Grid.Column="1"/>
+
+                <TextBlock x:Name="ChatModelLabel" Text="ChatCompletions Model:" Style="{StaticResource BodyTextBlockStyle}" HorizontalAlignment="Right" Margin="0,0,10,0" Grid.Row="4" Grid.Column="0"/>
+                <TextBlock x:Name="ChatModelValue" Style="{StaticResource BodyTextBlockStyle}" Grid.Row="4" Grid.Column="1"/>
+
+                <TextBlock x:Name="AutoInvokeLabel" Text="Auto invoke:" Style="{StaticResource BodyTextBlockStyle}" HorizontalAlignment="Right" Margin="0,0,10,0" Grid.Row="5" Grid.Column="0"/>
+                <TextBlock x:Name="AutoInvokeValue" Style="{StaticResource BodyTextBlockStyle}" Grid.Row="5" Grid.Column="1"/>
+
+            </Grid>
+        </Border>
+    </Grid>
+</Page>
