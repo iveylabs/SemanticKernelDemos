@@ -1,20 +1,19 @@
-﻿using System.Net;
-using Microsoft.SemanticKernel;
+﻿using Microsoft.SemanticKernel;
 using Microsoft.SemanticKernel.ChatCompletion;
 using Microsoft.SemanticKernel.Plugins.Core;
 using Microsoft.UI;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
-using Microsoft.UI.Xaml.Input;
 using Microsoft.UI.Xaml.Media;
 using SemanticKernelDemos.Contracts.Services;
 using SemanticKernelDemos.Helpers;
 using SemanticKernelDemos.Plugins;
+
 using SemanticKernelDemos.ViewModels;
 
 namespace SemanticKernelDemos.Views;
 
-public sealed partial class Demo1Page : Page
+public sealed partial class Demo2Page : Page
 {
     public Kernel Kernel
     {
@@ -29,22 +28,24 @@ public sealed partial class Demo1Page : Page
     private string _chatModel = string.Empty;
     private bool _autoInvoke;
 
-    public Demo1ViewModel ViewModel
+    public Demo2ViewModel ViewModel
     {
         get;
     }
 
-    public Demo1Page()
+    public Demo2Page()
     {
-        ViewModel = App.GetService<Demo1ViewModel>();
+        ViewModel = App.GetService<Demo2ViewModel>();
         InitializeComponent();
 
         // Show a loading circle
         ShowLoading();
 
+        // Disable the text input box
+        InputTextBox.IsEnabled = false;
+
         _localSettingsService = App.GetService<ILocalSettingsService>();
         LoadSettings();
-
 
         // Create a kernel with Azure OpenAI chat completion
         var kernelBuilder = Kernel.CreateBuilder()
@@ -65,16 +66,30 @@ public sealed partial class Demo1Page : Page
             throw new InvalidOperationException("Kernel creation failed.", ex);
         }
 
+        // Import native core plugin
+        Kernel.Plugins.AddFromType<TimePlugin>();
+
         // Initialise ChatManager
         _chatManager = new ChatManager(Kernel);
 
         // Hide the loading circle
         HideLoading();
 
+        SendMessage();
+
+        //var chatControl = (ChatControl)FindName("ChatControl");
+        //if (chatControl != null)
+        //{
+        //    var plugins = new List<Type>
+        //        {
+        //            typeof(TimePlugin),
+        //            typeof(ManageChatPlugin)
+        //        };
+        //    chatControl.CreateKernelBuilder(plugins);
+        //}
+
+
     }
-
-
-
     private void LoadSettings()
     {
         var endpoint = _localSettingsService.ReadSetting<string>("AOAIEndpoint");
@@ -119,7 +134,6 @@ public sealed partial class Demo1Page : Page
     {
         if (inProgress)
         {
-            InputTextBox.IsEnabled = false;
             InputTextBox.Text = string.Empty;
             InputTextBox.PlaceholderText = "Thinking...";
             SendButton.IsEnabled = false;
@@ -127,10 +141,10 @@ public sealed partial class Demo1Page : Page
         }
         else
         {
-            InputTextBox.IsEnabled = true;
+            InputTextBox.Text = string.Empty;
+            SendButton.IsEnabled = true;
             ResponseProgressBar.Visibility = Visibility.Collapsed;
-            InputTextBox.PlaceholderText = "Enter a message to begin";
-            InputTextBox.Focus(FocusState.Keyboard);
+            InputTextBox.PlaceholderText = "Text box disabled for this demo";
         }
     }
 
@@ -140,12 +154,6 @@ public sealed partial class Demo1Page : Page
         ClearChatHistory();
         ChatManager.ClearChatHistory();
         ClearChatButton.Visibility = Visibility.Collapsed;
-    }
-
-    // Ensure the input text box receives keyboard focus when it's loaded
-    private void InputTextBox_Loaded(object sender, RoutedEventArgs e)
-    {
-        InputTextBox.Focus(FocusState.Keyboard);
     }
 
     // Clear the visible chat history
@@ -193,7 +201,7 @@ public sealed partial class Demo1Page : Page
 
     private async void SendMessage()
     {
-        string userInput = InputTextBox.Text;
+        var userInput = "TimePlugin, DayOfWeek";
 
         // Should always be true, but just in case
         if (!string.IsNullOrWhiteSpace(userInput))
@@ -207,7 +215,7 @@ public sealed partial class Demo1Page : Page
                 AddMessageToConversation(AuthorRole.User, userInput);
 
                 // Send user message to the chat manager
-                var response = await _chatManager.SendMessageAsync(userInput, "InvokePromptAsync");
+                var response = await _chatManager.SendMessageAsync(userInput, "InvokeAsync");
 
                 // Display the completion response
                 AddMessageToConversation(AuthorRole.Assistant, response);
@@ -224,29 +232,10 @@ public sealed partial class Demo1Page : Page
         }
     }
 
-    // Handle pressing enter from the input text box
-    private void InputTextBox_KeyDown(object sender, KeyRoutedEventArgs e)
-    {
-        // Enable the send button if the input text box isn't empty, otherwise disable
-        if (!string.IsNullOrWhiteSpace(InputTextBox.Text))
-        {
-            SendButton.IsEnabled = true;
-        }
-        else
-        {
-            SendButton.IsEnabled = false;
-        }
-
-        // Send message when the user hits enter as long as the input text box isn't empty
-        if (e.Key == Windows.System.VirtualKey.Enter && !string.IsNullOrWhiteSpace(InputTextBox.Text))
-        {
-            SendMessage();
-        }
-    }
-
     // Handle send button clicks
     private void SendButton_Click(object sender, RoutedEventArgs e)
     {
         SendMessage();
     }
+
 }

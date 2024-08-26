@@ -45,14 +45,21 @@
                 -->
                 <NavigationViewItem x:Uid="Shell_Home" helpers:NavigationHelper.NavigateTo="SemanticKernelDemos.ViewModels.HomeViewModel">
                     <NavigationViewItem.Icon>
-                        <FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xe7c3;"/>
+                        <FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xE80F;"/>
                     </NavigationViewItem.Icon>
                 </NavigationViewItem>
-                <NavigationViewItem x:Uid="Shell_Demo1" helpers:NavigationHelper.NavigateTo="SemanticKernelDemos.ViewModels.Demo1ViewModel">
+
+                <NavigationViewItem x:Uid="Shell_Demo1" helpers:NavigationHelper.NavigateTo="SemanticKernelDemos.ViewModels.Demo1ViewModel" ToolTipService.ToolTip="InvokePromptAsync basic prompt only">
                     <NavigationViewItem.Icon>
-                        <FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xe7c3;"/>
+                        <FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xE768;"/>
                     </NavigationViewItem.Icon>
                 </NavigationViewItem>
+                <NavigationViewItem x:Uid="Shell_Demo2" helpers:NavigationHelper.NavigateTo="SemanticKernelDemos.ViewModels.Demo2ViewModel" ToolTipService.ToolTip="InvokeAsync TimePlugin, DayOfWeek">
+                    <NavigationViewItem.Icon>
+                        <FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xE768;"/>
+                    </NavigationViewItem.Icon>
+                </NavigationViewItem>
+                
                 <NavigationViewItem x:Uid="Shell_Docs" helpers:NavigationHelper.NavigateTo="SemanticKernelDemos.ViewModels.DocsViewModel">
                     <NavigationViewItem.Icon>
                         <FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xe774;"/>
@@ -63,6 +70,7 @@
                         <FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xe774;"/>
                     </NavigationViewItem.Icon>
                 </NavigationViewItem>
+
             </NavigationView.MenuItems>
             <NavigationView.HeaderTemplate>
                 <DataTemplate>

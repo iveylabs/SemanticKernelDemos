@@ -127,7 +127,7 @@
     <value>Home</value>
   </data>
   <data name="Shell_Demo1.Content" xml:space="preserve">
-    <value>Demo1</value>
+    <value>InvokePromptAsync</value>
   </data>
   <data name="WebView_Loading.Text" xml:space="preserve">
     <value>Loading...</value>
@@ -193,5 +193,8 @@ This application was created by Paul Ivey for his own learning and for demonstra
   </data>
   <data name="Settings_AOAI.Text" xml:space="preserve">
     <value>Azure OpenAI Settings</value>
+  </data>
+  <data name="Shell_Demo2.Content" xml:space="preserve">
+    <value>InvokeAsync (TimePlugin, DayOfWeek)</value>
   </data>
 </root>

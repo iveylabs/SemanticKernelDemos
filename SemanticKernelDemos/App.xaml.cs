@@ -4,6 +4,7 @@ using Microsoft.UI.Dispatching;
 using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
+
 using SemanticKernelDemos.Activation;
 using SemanticKernelDemos.Contracts.Services;
 using SemanticKernelDemos.Core.Contracts.Services;
@@ -73,6 +74,8 @@ public partial class App : Application
             services.AddSingleton<IFileService, FileService>();
 
             // Views and ViewModels
+            services.AddTransient<Demo2ViewModel>();
+            services.AddTransient<Demo2Page>();
             services.AddTransient<SettingsViewModel>();
             services.AddTransient<SettingsPage>();
             services.AddTransient<RepoViewModel>();

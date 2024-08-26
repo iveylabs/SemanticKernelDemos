@@ -76,8 +76,12 @@ public sealed partial class ChatControl : UserControl
         // Show a loading circle
         ShowLoading();
 
+        // Get settings from local app data
         _localSettingsService = App.GetService<ILocalSettingsService>();
         LoadSettings();
+
+        // Initialise ChatManager
+        _chatManager = new ChatManager(Kernel);
 
         // Hide the loading circle
         HideLoading();
@@ -336,4 +340,10 @@ public sealed partial class ChatControl : UserControl
         // Initialize ChatManager after Kernel is built
         InitializeChatManager();
     }
+
+    public void SetInputTextBotEnabled(bool isEnabled)
+    {
+        InputTextBox.IsEnabled = isEnabled;
+    }
+
 }
