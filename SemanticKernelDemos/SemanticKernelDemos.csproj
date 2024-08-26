@@ -43,7 +43,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\TestingNav.Core\SemanticKernelDemos.Core.csproj" />
+    <ProjectReference Include="..\SemanticKernelDemos.Core\SemanticKernelDemos.Core.csproj" />
   </ItemGroup>
   <ItemGroup>
     <None Update="appsettings.json">

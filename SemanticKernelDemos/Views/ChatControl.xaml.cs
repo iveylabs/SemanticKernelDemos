@@ -1,3 +1,4 @@
+
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -77,10 +78,6 @@ public sealed partial class ChatControl : UserControl
 
         _localSettingsService = App.GetService<ILocalSettingsService>();
         LoadSettings();
-        //CreateKernelBuilder();
-
-        //Initialise ChatManager
-        //_chatManager = new ChatManager(Kernel, _autoInvoke);
 
         // Hide the loading circle
         HideLoading();
