@@ -92,7 +92,8 @@ public class ChatManager
     }
 
     // Clear the kernel history
-    public void ClearChatHistory() => _history.RemoveRange(1, _history.Count - 1);
+    //public void ClearChatHistory() => _history.RemoveRange(1, _history.Count - 1);
+    public void ClearChatHistory() => _history.Clear();
 
     // Send message and process response
     public async Task<string> SendMessageAsync(string message)

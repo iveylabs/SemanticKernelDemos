@@ -203,9 +203,6 @@ public sealed partial class ChatControl : UserControl
         // Hide the button
         ClearChatButton.Visibility = Visibility.Collapsed;
         ChatManager.ClearChatHistory();
-
-        // Clear the kernel history
-        ChatManager.ClearChatHistory();
     }
 
     // In-progress display
