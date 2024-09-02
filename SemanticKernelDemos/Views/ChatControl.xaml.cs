@@ -1,4 +1,4 @@
-
+﻿
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -80,9 +80,6 @@ public sealed partial class ChatControl : UserControl
         _localSettingsService = App.GetService<ILocalSettingsService>();
         LoadSettings();
 
-        // Initialise ChatManager
-        //_chatManager = new ChatManager(Kernel);
-
         // Hide the loading circle
         HideLoading();
     }
@@ -144,6 +141,12 @@ public sealed partial class ChatControl : UserControl
                 InProgress(false);
             }
         }
+    }
+
+    public void SendIntroMessage(string message)
+    {
+        AddMessageToConversation(AuthorRole.Assistant, message);
+        _chatManager.SendIntroMessageAsync(message);
     }
 
     // Add message to the chat view

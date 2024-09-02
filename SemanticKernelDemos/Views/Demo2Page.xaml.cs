@@ -4,6 +4,7 @@ using Microsoft.SemanticKernel.Plugins.Core;
 using Microsoft.UI;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
+using Microsoft.UI.Xaml.Input;
 using Microsoft.UI.Xaml.Media;
 using SemanticKernelDemos.Contracts.Services;
 using SemanticKernelDemos.Helpers;
@@ -26,7 +27,6 @@ public sealed partial class Demo2Page : Page
     private string _key = string.Empty;
     private string _chatDeployment = string.Empty;
     private string _chatModel = string.Empty;
-    private bool _autoInvoke;
 
     public Demo2ViewModel ViewModel
     {
@@ -40,9 +40,6 @@ public sealed partial class Demo2Page : Page
 
         // Show a loading circle
         ShowLoading();
-
-        // Disable the text input box
-        InputTextBox.IsEnabled = false;
 
         _localSettingsService = App.GetService<ILocalSettingsService>();
         LoadSettings();
@@ -75,7 +72,22 @@ public sealed partial class Demo2Page : Page
         // Hide the loading circle
         HideLoading();
 
-        SendMessage();
+        // Send an initial message from the "bot"
+        AddMessageToConversation(AuthorRole.Assistant, @"Hello! This demo uses InvokeAsync to call a function from the plugin TimePlugin. Please type one of the following to execute the appropriate function:
+        - Date
+        - Today
+        - Not
+        - UtcNow
+        - Time
+        - Year
+        - Month
+        - MonthNumber
+        - DayOfWeek
+        - Hour
+        - HourNumber
+        - Minute
+        - TimeZoneOffset
+        - TimeZoneName");
     }
     private void LoadSettings()
     {
@@ -83,7 +95,6 @@ public sealed partial class Demo2Page : Page
         var key = _localSettingsService.ReadSetting<string>("AOAIKey");
         var chatDeployment = _localSettingsService.ReadSetting<string>("AOAIChatDeployment");
         var chatModel = _localSettingsService.ReadSetting<string>("AOAIChatModel");
-        var autoInvoke = _localSettingsService.ReadSetting<bool>("AutoInvoke");
 
         if (endpoint != null)
         {
@@ -101,7 +112,6 @@ public sealed partial class Demo2Page : Page
         {
             _chatModel = chatModel;
         }
-        _autoInvoke = autoInvoke;
     }
 
     private void ShowLoading()
@@ -143,6 +153,12 @@ public sealed partial class Demo2Page : Page
         ClearChatButton.Visibility = Visibility.Collapsed;
     }
 
+    // Ensure the input text box receives keyboard focus when it's loaded
+    private void InputTextBox_Loaded(object sender, RoutedEventArgs e)
+    {
+        InputTextBox.Focus(FocusState.Keyboard);
+    }
+
     // Clear the visible chat history
     public void ClearChatHistory()
     {
@@ -150,6 +166,23 @@ public sealed partial class Demo2Page : Page
         {
             ConversationList.Items.Clear();
             ClearChatButton.Visibility = Visibility.Collapsed;
+
+        // Send an initial message from the "bot"
+        AddMessageToConversation(AuthorRole.Assistant, @"Hello! This demo uses InvokeAsync to call a function from the plugin TimePlugin. Please type one of the following to execute the appropriate function:
+        - Date
+        - Today
+        - Not
+        - UtcNow
+        - Time
+        - Year
+        - Month
+        - MonthNumber
+        - DayOfWeek
+        - Hour
+        - HourNumber
+        - Minute
+        - TimeZoneOffset
+        - TimeZoneName");
         });
     }
 
@@ -188,7 +221,7 @@ public sealed partial class Demo2Page : Page
 
     private async void SendMessage()
     {
-        var userInput = "TimePlugin, DayOfWeek";
+        var userInput = InputTextBox.Text;
 
         // Should always be true, but just in case
         if (!string.IsNullOrWhiteSpace(userInput))
@@ -225,4 +258,23 @@ public sealed partial class Demo2Page : Page
         SendMessage();
     }
 
+    // Handle pressing enter from the input text box
+    private void InputTextBox_KeyDown(object sender, KeyRoutedEventArgs e)
+    {
+        // Enable the send button if the input text box isn't empty, otherwise disable
+        if (!string.IsNullOrWhiteSpace(InputTextBox.Text))
+        {
+            SendButton.IsEnabled = true;
+        }
+        else
+        {
+            SendButton.IsEnabled = false;
+        }
+
+        // Send message when the user hits enter as long as the input text box isn't empty
+        if (e.Key == Windows.System.VirtualKey.Enter && !string.IsNullOrWhiteSpace(InputTextBox.Text))
+        {
+            SendMessage();
+        }
+    }
 }

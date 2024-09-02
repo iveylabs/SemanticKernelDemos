@@ -32,7 +32,6 @@ public sealed partial class Demo4Page : Page
     private string _key = string.Empty;
     private string _chatDeployment = string.Empty;
     private string _chatModel = string.Empty;
-    private bool _autoInvoke;
 
     public Demo4Page()
     {
@@ -73,6 +72,9 @@ public sealed partial class Demo4Page : Page
 
         // Hide the loading circle
         HideLoading();
+
+        // Send an initial message from the "bot"
+        AddMessageToConversation(AuthorRole.Assistant, "Hello! Tell me what activities you like and what you budget is, and I'll try to suggest some destinations that you'll love 😊✈️🌍");
     }
 
     private void LoadSettings()
@@ -81,7 +83,6 @@ public sealed partial class Demo4Page : Page
         var key = _localSettingsService.ReadSetting<string>("AOAIKey");
         var chatDeployment = _localSettingsService.ReadSetting<string>("AOAIChatDeployment");
         var chatModel = _localSettingsService.ReadSetting<string>("AOAIChatModel");
-        var autoInvoke = _localSettingsService.ReadSetting<bool>("AutoInvoke");
 
         if (endpoint != null)
         {
@@ -99,7 +100,6 @@ public sealed partial class Demo4Page : Page
         {
             _chatModel = chatModel;
         }
-        _autoInvoke = autoInvoke;
     }
 
     private void ShowLoading()
@@ -155,6 +155,9 @@ public sealed partial class Demo4Page : Page
         {
             ConversationList.Items.Clear();
             ClearChatButton.Visibility = Visibility.Collapsed;
+
+            // Send an initial message from the "bot"
+            AddMessageToConversation(AuthorRole.Assistant, "Hello! Tell me what activities you like and what you budget is, and I'll try to suggest some destinations that you'll love 😊✈️🌍");
         });
     }
 

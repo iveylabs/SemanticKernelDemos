@@ -27,7 +27,6 @@ public sealed partial class Demo1Page : Page
     private string _key = string.Empty;
     private string _chatDeployment = string.Empty;
     private string _chatModel = string.Empty;
-    private bool _autoInvoke;
 
     public Demo1ViewModel ViewModel
     {
@@ -71,6 +70,8 @@ public sealed partial class Demo1Page : Page
         // Hide the loading circle
         HideLoading();
 
+        // Send an initial message from the "bot"
+        AddMessageToConversation(AuthorRole.Assistant, "Hello! This demo uses InvokePromptAsync to process your messages. I only know of the last message sent to chat and cannot access to any real-time information.");
     }
 
     private void LoadSettings()
@@ -79,7 +80,6 @@ public sealed partial class Demo1Page : Page
         var key = _localSettingsService.ReadSetting<string>("AOAIKey");
         var chatDeployment = _localSettingsService.ReadSetting<string>("AOAIChatDeployment");
         var chatModel = _localSettingsService.ReadSetting<string>("AOAIChatModel");
-        var autoInvoke = _localSettingsService.ReadSetting<bool>("AutoInvoke");
 
         if (endpoint != null)
         {
@@ -97,7 +97,6 @@ public sealed partial class Demo1Page : Page
         {
             _chatModel = chatModel;
         }
-        _autoInvoke = autoInvoke;
     }
 
     private void ShowLoading()
@@ -153,6 +152,9 @@ public sealed partial class Demo1Page : Page
         {
             ConversationList.Items.Clear();
             ClearChatButton.Visibility = Visibility.Collapsed;
+
+            // Add initial message from the "bot"
+            AddMessageToConversation(AuthorRole.Assistant, "Hello! This demo only uses InvokePromptAsync to process your messages. I only know of the last message sent to chat and cannot access to any real-time information.");
         });
     }
 

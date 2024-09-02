@@ -30,6 +30,7 @@ public sealed partial class Demo5Page : Page
                 typeof(WeatherPlugin)
             };
             chatControl.CreateKernelBuilder(plugins);
+            chatControl.SendIntroMessage("Hello! You can message me anything and I can automatically call functions from the TimePlugin, ManageChatPlugin, and WeatherPlugin. 💪😎");
         }
     }
 }

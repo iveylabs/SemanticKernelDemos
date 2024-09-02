@@ -1,17 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using CommunityToolkit.Mvvm.Messaging;
+﻿using CommunityToolkit.Mvvm.Messaging;
 using Microsoft.SemanticKernel;
 using Microsoft.SemanticKernel.ChatCompletion;
 using Microsoft.SemanticKernel.Connectors.OpenAI;
-using Microsoft.UI.Xaml.Controls;
-using SemanticKernelDemos.Views;
-using Windows.System.RemoteSystems;
 
 namespace SemanticKernelDemos.Helpers;
+
 public class ChatManager
 {
     private readonly Kernel _kernel;
@@ -95,6 +88,19 @@ public class ChatManager
     //public void ClearChatHistory() => _history.RemoveRange(1, _history.Count - 1);
     public void ClearChatHistory() => _history.Clear();
 
+    // Send initial message from "bot"
+    public async void SendIntroMessageAsync(string message)
+    {
+        // Add user message to history and to chat view
+        _history.AddMessage(AuthorRole.Assistant, message);
+
+        // Get the response from the chat completion service
+        await _chatCompletionService.GetChatMessageContentAsync(
+            _history,
+            _promptExecutionSettings,
+            _kernel);
+    }
+
     // Send message and process response
     public async Task<string> SendMessageAsync(string message)
     {
@@ -130,9 +136,6 @@ public class ChatManager
     // Send message (method)
     public async Task<string> SendMessageAsync(string message, string method)
     {
-        // Add user message to history and to chat view
-        _history.AddMessage(AuthorRole.User, message);
-
         // Get the response from the chat completion service
         switch (method)
         {
@@ -148,7 +151,7 @@ public class ChatManager
                 }
                 break;
             case ("InvokeAsync"):
-                var invokeResponse = await _kernel.InvokeAsync("TimePlugin", "DayOfWeek");
+                var invokeResponse = await _kernel.InvokeAsync("TimePlugin", message);
                 if (invokeResponse != null)
                 {
                     _botResponse = invokeResponse.ToString();
@@ -169,7 +172,7 @@ public class ChatManager
                                 Create a list of helpful words and phrases in {language} the traveller would find useful.
         
                                 Group phrases by category. Include common direction words. Display the 
-                                phrases in the following format:
+                                phrases in the following format with English first, then French:
                                 Hello - Ciao [chow]
 
                                 Begin with: 'Here are some phrases in {{$language}} you may find helpful:' 
