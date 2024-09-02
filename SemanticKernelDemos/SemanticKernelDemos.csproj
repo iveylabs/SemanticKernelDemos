@@ -25,11 +25,13 @@
     <Manifest Include="$(ApplicationManifest)" />
   </ItemGroup>
 
-    <ItemGroup>
-	    <Content Include="Assets\ai.png" />
-	    <Content Include="Assets\user.png" />
-	    <Content Include="Assets\WindowIcon.ico" />
-    </ItemGroup>
+	<ItemGroup>
+		<Content Include="Assets\**\*">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+			<Pack>true</Pack>
+			<PackagePath>content\Assets\</PackagePath>
+		</Content>
+	</ItemGroup>
 
 	<ItemGroup>
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.2" />

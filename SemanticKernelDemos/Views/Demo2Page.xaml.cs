@@ -76,7 +76,7 @@ public sealed partial class Demo2Page : Page
         AddMessageToConversation(AuthorRole.Assistant, @"Hello! This demo uses InvokeAsync to call a function from the plugin TimePlugin. Please type one of the following to execute the appropriate function:
         - Date
         - Today
-        - Not
+        - Now
         - UtcNow
         - Time
         - Year
@@ -171,7 +171,7 @@ public sealed partial class Demo2Page : Page
         AddMessageToConversation(AuthorRole.Assistant, @"Hello! This demo uses InvokeAsync to call a function from the plugin TimePlugin. Please type one of the following to execute the appropriate function:
         - Date
         - Today
-        - Not
+        - Now
         - UtcNow
         - Time
         - Year

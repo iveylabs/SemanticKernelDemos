@@ -166,7 +166,6 @@ public sealed partial class ChatControl : UserControl
             TextColour = isUserMessage ? new SolidColorBrush(Colors.Black) : new SolidColorBrush(Colors.Black), // unlikely to ever be wanted, because it'll probably look terrible
             Alignment = isUserMessage ? HorizontalAlignment.Right : HorizontalAlignment.Left,
             Margin = isUserMessage ? new Thickness(50, 5, 10, 5) : new Thickness(10, 5, 50, 5),
-            //ImageSource = isUserMessage ? "Assets/user.png" : "Assets/ai.png"
             ImageSource = isUserMessage ? "ms-appx:///Assets/user.png" : "ms-appx:///Assets/ai.png"
         };
 

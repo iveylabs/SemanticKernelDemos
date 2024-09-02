@@ -59,7 +59,7 @@
                     <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
 
-                <TextBox Grid.Column="0" x:Name="InputTextBox" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" TextWrapping="Wrap" MinHeight="50" IsEnabled="False"/>
+                <TextBox Grid.Column="0" x:Name="InputTextBox" HorizontalAlignment="Stretch" KeyDown="InputTextBox_KeyDown" Loaded="InputTextBox_Loaded" VerticalAlignment="Stretch" TextWrapping="Wrap" MinHeight="50"/>
                 <Button Grid.Column="1" x:Name="SendButton" Content="Send" Click="SendButton_Click" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" IsEnabled="False"/>
                 <ProgressBar x:Name="ResponseProgressBar" Height="20" IsIndeterminate="True" Visibility="Collapsed" HorizontalAlignment="Stretch" VerticalAlignment="Bottom"/>
             </Grid>
