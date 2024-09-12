@@ -193,7 +193,7 @@ public class ChatManager
                 }
                 break;
             case ("InvokeAsyncDest"):
-                var destResponse = await _kernel.InvokeAsync<string>(_plugin["SuggestDestinations"],
+                var destResponse = await _kernel.InvokeAsync("TravelPlugin", "SuggestDestinations",
                     new()
                     {
                         { "input", message }

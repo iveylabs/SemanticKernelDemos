@@ -195,7 +195,7 @@ This application was created by Paul Ivey for his own learning and for demonstra
     <value>Azure OpenAI Settings</value>
   </data>
   <data name="Shell_Demo2.Content" xml:space="preserve">
-    <value>InvokeAsync (TimePlugin, DayOfWeek)</value>
+    <value>InvokeAsync (TimePlugin, input)</value>
   </data>
   <data name="Shell_Demo3.Content" xml:space="preserve">
     <value>InvokePromptAsync with template</value>

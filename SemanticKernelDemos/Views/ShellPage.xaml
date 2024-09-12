@@ -54,7 +54,7 @@
                         <FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xE768;"/>
                     </NavigationViewItem.Icon>
                 </NavigationViewItem>
-                <NavigationViewItem x:Uid="Shell_Demo2" helpers:NavigationHelper.NavigateTo="SemanticKernelDemos.ViewModels.Demo2ViewModel" ToolTipService.ToolTip="InvokeAsync TimePlugin, DayOfWeek">
+                <NavigationViewItem x:Uid="Shell_Demo2" helpers:NavigationHelper.NavigateTo="SemanticKernelDemos.ViewModels.Demo2ViewModel" ToolTipService.ToolTip="InvokeAsync TimePlugin, input">
                     <NavigationViewItem.Icon>
                         <FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xE768;"/>
                     </NavigationViewItem.Icon>

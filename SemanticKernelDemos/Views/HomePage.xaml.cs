@@ -65,7 +65,7 @@ public sealed partial class HomePage : Page
         {
             ChatModelValue.Text = "NOT YET SET";
         }
-
+        
         AutoInvokeValue.Text = autoInvoke;
 
     }
